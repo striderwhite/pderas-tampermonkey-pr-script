@@ -1,8 +1,8 @@
 # PDERAS Tamper Monkey PR Script
 
-When we approve a PR, we must track time in Harvest against the underlying issue the PR refers to, not the PR itself. I did what most sane developers would do and automate this as much as possible becaus 3-4x extra clicks for every PR is going to add up in a busy day, and who enjoys spending time on tedious repetition?
+When we approve a PR, we must track time in Harvest against the underlying issue the PR refers to, not the PR itself. I did what most sane developers would do and automate this as much as possible because 3-4x extra clicks for every PR is going to add up in a busy day, and who enjoys spending time on tedious repetition?
 
-What this does is hijack the harvest button for tracking time against a PR's underlying issue instead of the PR itself. Now when you click the "track time" button, the payload sent to the Harvest servers is modified to track time against the linked issue in the PR, neat.
+What this does is hijack the harvest button for tracking time against a PRs underlying issue instead of the PR itself. Now when you click the "track time" button, the payload sent to the Harvest servers is modified to track time against the linked issue in the PR - neat.
 
 ## Install/Requirements
 
@@ -26,7 +26,7 @@ Do this by:
 
 ## Limitations
 - The PR *MUST* refer to an issue by github linkage - for example by #1234 - the link must be "clickable"
-- This uses the title of the PR to fill in the description of what you track against, so title your PR's accordingly. If you want a different message you'll have to modify it on the Harvest popup window.
+- This uses the title of the PR to fill in the description of what you track against, so title your PRs accordingly. If you want a different message you'll have to modify it on the Harvest popup window.
 - Relies on specific query selectors - it is fragile
 - Doesn't support Chrome
 - Doesn't automate reviewing the code for you ;)
