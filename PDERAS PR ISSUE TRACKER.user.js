@@ -33,7 +33,6 @@
         relatedIssue = relatedIssue[0];
         // It appears there should only be one issue title, but maybe not - grab the first one
         issueTitle = issueTitle[0];
-        console.dir(issueTitle);
 
         // Grab data wew need from the related issue
         let relatedIssueData = {
