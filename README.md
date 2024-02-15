@@ -1,4 +1,4 @@
-# PDERAS Tamper Monkey PR Script
+# FALBED Tamper Monkey PR Script
 
 When we approve a PR, we must track time in Harvest against the underlying issue the PR refers to, not the PR itself. I did what most sane developers would do and automate this as much as possible because 3-4x extra clicks for every PR is going to add up in a busy day, and who enjoys spending time on tedious repetition?
 
@@ -14,7 +14,7 @@ Do this by:
 
 - Settings > Privacy & Security > Manage Exceptions
 - Then add https://github.com there
-4) Now add the `PDERAS PR ISSUE TRACKER.user.js` script to Tampermonkey.
+4) Now add the `FABLED PR ISSUE TRACKER.user.js` script to Tampermonkey.
 
 Do this by:
 
