@@ -1,8 +1,8 @@
 // ==UserScript==
-// @name         PDERAS PR ISSUE TRACKER
-// @namespace    http://pderas.com/
-// @version      0.1
-// @description  Hacks the existing harvest button for tracking time against a PR's underlying issue instead of the PR itself.
+// @name         FABLED PR ISSUE TRACKER
+// @namespace    https://fabledsolutions.com/
+// @version      0.2
+// @description  Hacks the existing harvest button for tracking time against a PR's underly issue instead of the PR itself.
 // @author       Strider White <strider@striderwhite.com>
 // @match        https://github.com/*/*/pull/*
 // @icon         none
@@ -12,30 +12,35 @@
 (async function() {
     'use strict';
 
-    let relatedIssue = await getMeAsync("issue-link", 'related issue', true);
-    let harvestButton = await getMeAsync("#partial-discussion-header > div.gh-header-show > div > div > button.harvest-timer.btn.btn-sm.mr-1", 'harvest button');
-    let issueTitle = await getMeAsync("js-issue-title", 'issue title', true);
+    console.log("[FABLED PR ISSUE TRACKER]");
 
-    if (!relatedIssue) {
+    const relatedIssueDom = await getMeAsync("issue-link", 'related issue', true);
+    const issueTitleDom = await getMeAsync("js-issue-title", 'issue title', true);
+
+    // This is the harvest plugin's button we are "borrowing"
+    let harvestButton = await getMeAsync("#partial-discussion-header > div.gh-header-show > div > div > button.harvest-timer.btn.btn-sm.mr-1", 'harvest button');
+
+    if (!relatedIssueDom) {
         displayErrorMessage("Unable to find the related issue - did you link it correctly?");
+    }
+
+    if (!issueTitleDom) {
+        displayErrorMessage("Unable to find the issue title - maybe the css selector changed?");
     }
 
     if (!harvestButton) {
         displayErrorMessage("Unable to find the harvest button - is the plugin working?");
     }
 
-    if (!issueTitle) {
-        displayErrorMessage("Unable to find the issue title - maybe the css selector changed?");
-    }
-
-    if (harvestButton && relatedIssue && issueTitle) {
+    if (relatedIssueDom && issueTitleDom && harvestButton) {
         // There can be multiple issues on the page with this class, usually the first one is the correct one
-        relatedIssue = relatedIssue[0];
+        const relatedIssue = relatedIssueDom[0];
+
         // It appears there should only be one issue title, but maybe not - grab the first one
-        issueTitle = issueTitle[0];
+        const issueTitle = issueTitleDom[0];
 
         // Grab data wew need from the related issue
-        let relatedIssueData = {
+        const relatedIssueData = {
             url: relatedIssue.href,
             text: issueTitle.innerText,
             number: relatedIssue.href.split('/')[relatedIssue.href.split('/').length-1] // splits the URL to get the item #
@@ -54,10 +59,12 @@
         harvestButton.dataset.permalink = relatedIssueData.url;
 
         // Modify the harvest button so we know it worked
-        harvestButton.innerText = "[PDERAS] TRACK AGAINST ISSUE #" + relatedIssueData.number;
+        harvestButton.innerText = "[FABLED] ISSUE #" + relatedIssueData.number;
+
+        console.log("[ISSUE TRACKER] - SUCCESS");
+    } else {
+        console.dir("[ISSUE TRACKER] - FAILED");
     }
-
-
 })();
 
 async function getMeAsync(selector, lookingFor, byClassName = false) {
@@ -98,6 +105,4 @@ function displayErrorMessage(message) {
         warningDiv.appendChild(warningText);
         actionElm.appendChild(warningDiv);
     }
-
-
 }
